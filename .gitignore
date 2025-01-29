@@ -1,0 +1,22 @@
+# Carpetas a ignorar
+**/.vs/
+**/bin/
+**/obj/
+**/packages/
+**/TestResults/
+**/.git
+
+# Archivos específicos
+*.user
+*.suo
+*.cache
+*.vscode/
+*.DS_Store
+.env.local
+appsettings.local.json
+
+# Otros
+**/node_modules/
+**/bower_components/
+*.log
+*.tmp
