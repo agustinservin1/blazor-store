@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eCommerceApp.Application.Models;
 using eCommerceApp.Application.Models.ProductDTO;
+using eCommerceApp.Application.Services.Interfaces;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Interfaces;
 
@@ -15,7 +16,7 @@ namespace eCommerceApp.Application.Services.Implementations
             return result > 0 ? new ServiceResponse(true, "Product Added") :
                    new ServiceResponse(false, "Product failed to be Added");
         }
-        }
+        
 
         public async Task<ServiceResponse> DeleteAsync(Guid id)
         {
@@ -32,10 +33,10 @@ namespace eCommerceApp.Application.Services.Implementations
 
         }
 
-        public async Task<GetProduct> GetByIdAsync(Guid id)
+        public async Task<GetProduct?> GetByIdAsync(Guid id)
         {
             var rawData = await productInterface.GetByIdAsync(id);
-            if (!rawData.Any()) return new GetProduct();
+            if (rawData == null) return new GetProduct();
             return mapper.Map<GetProduct>(rawData);
 
         }
@@ -43,7 +44,7 @@ namespace eCommerceApp.Application.Services.Implementations
         public async Task<ServiceResponse> UpdateAsync(UpdateProduct product)
         {
             var mappedData = mapper.Map<Product>(product);
-            int result = await productInterface.AddAsync(mappedData);
+            int result = await productInterface.UpdateAsync(mappedData);
             return result > 0 ? new ServiceResponse(true, "Product updated") :
                    new ServiceResponse(false, "Product failed to be updated");
         }

@@ -2,7 +2,7 @@
 using eCommerceApp.Application.Models;
 using eCommerceApp.Application.Models.CategoryDto;
 using eCommerceApp.Application.Models.ProductDTO;
-using eCommerceApp.Application.Services;
+using eCommerceApp.Application.Services.Interfaces;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Interfaces;
 
@@ -16,8 +16,7 @@ namespace eCommerceApp.Application.Services.Implementations
             return result > 0 ? new ServiceResponse(true, "Category Added") :
                     new ServiceResponse(false, "Category failed to be Added");
         }
-        }
-
+        
         public async Task<ServiceResponse> DeleteAsync(Guid id)
         {
             var result = await categoryInterface.DeleteAsync(id);
@@ -35,17 +34,16 @@ namespace eCommerceApp.Application.Services.Implementations
         public async Task<GetCategory> GetByIdAsync(Guid id)
         {
             var rawData = await categoryInterface.GetByIdAsync(id);
-            if (!rawData.Any()) return new GetCategory();
+            if (rawData == null) return new GetCategory();
             return mapper.Map<GetCategory>(rawData); 
         }
 
         public async Task<ServiceResponse> UpdateAsync(UpdateCategory category)
         {
             var mappedData = mapper.Map<Category>(category);
-            int result = await categoryInterface.AddAsync(mappedData);
+            int result = await categoryInterface.UpdateAsync(mappedData);
             return result > 0 ? new ServiceResponse(true, "Category Updated") :
                     new ServiceResponse(false, "Category failed to be Updated");
         }
     }
     }
-}

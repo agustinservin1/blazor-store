@@ -1,11 +1,21 @@
-﻿namespace eCommerceApp.Application.Models.ProductDTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace eCommerceApp.Application.Models.ProductDTO
 {
     public class ProductBase
     {
-        public string? Name { get; set }
+        [Required]
+        public string? Name { get; set; }
+        [Required]
         public string? Description { get; set; }
-        public decimal? Price { get; set; }
-        public string? Image { get; set; }
+        [Required]
+        [DataType(DataType.Currency)]
+        public decimal Price { get; set; }
+        [Required]
+        public string Base64Image { get; set; } = string.Empty;
+        [Required]
         public int Quantity { get; set; }
+        [Required]
+        public Guid CategoryId { get; set; }
     }
 }

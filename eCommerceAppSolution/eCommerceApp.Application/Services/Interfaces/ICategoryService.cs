@@ -2,7 +2,7 @@
 using eCommerceApp.Application.Models.CategoryDto;
 using eCommerceApp.Application.Models.ProductDTO;
 
-namespace eCommerceApp.Application.Services
+namespace eCommerceApp.Application.Services.Interfaces
 {
     public interface ICategoryService
     {

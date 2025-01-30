@@ -1,6 +1,6 @@
 ﻿using eCommerceApp.Application.Mapping;
-using eCommerceApp.Application.Services;
 using eCommerceApp.Application.Services.Implementations;
+using eCommerceApp.Application.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
