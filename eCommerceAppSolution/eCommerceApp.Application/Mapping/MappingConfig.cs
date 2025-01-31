@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using eCommerceApp.Application.Models.CategoryDto;
+using eCommerceApp.Application.Models.IdentityDto;
 using eCommerceApp.Application.Models.ProductDTO;
 using eCommerceApp.Domain.Entities;
+using eCommerceApp.Domain.Entities.Identity;
 
 namespace eCommerceApp.Application.Mapping
 {
@@ -17,6 +19,9 @@ namespace eCommerceApp.Application.Mapping
             CreateMap<CreateCategory, Category>();
             CreateMap<Category, GetCategory>();
             CreateMap<UpdateCategory, Category>();
+
+            CreateMap<CreateUser, AppUser>();
+            CreateMap<AppUser, CreateUser>();
 
 
 

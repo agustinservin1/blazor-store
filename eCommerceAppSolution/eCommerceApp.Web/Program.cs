@@ -26,11 +26,21 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAplicationService();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
-
+builder.Services.AddCors(builder =>
+        builder.AddDefaultPolicy(options =>
+        {
+            options.AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins()
+            .AllowCredentials();
+        }));
+        
 try
 {
+    
 
     var app = builder.Build();
+    app.UseCors();
 
     app.UseSerilogRequestLogging();
 
