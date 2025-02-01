@@ -23,6 +23,9 @@ namespace eCommerceApp.Application.Mapping
             CreateMap<CreateUser, AppUser>();
             CreateMap<AppUser, CreateUser>();
 
+            CreateMap<LoginUser, AppUser>();
+            CreateMap<AppUser, LoginUser>();
+
 
 
         }

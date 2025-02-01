@@ -1,22 +1,58 @@
-# Carpetas a ignorar
+### Project Directories ###
+**/[Bb]in/
+**/[Oo]bj/
 **/.vs/
+/Migrations/
+**/packages/  
+**/TestResults/
+**/wwwroot/lib/
+**/.github/
 **/bin/
 **/obj/
-**/packages/
-**/TestResults/
-**/.git
+**/log/
+*.log
+**/.metadata/
+**/.git/
 
-# Archivos específicos
+### Build/IDE Files ###
 *.user
 *.suo
+*.userprefs
 *.cache
 *.vscode/
-*.DS_Store
-.env.local
-appsettings.local.json
-
-# Otros
-**/node_modules/
-**/bower_components/
+*.idea/
+*.sln.im
+*.swp
+*.sublime-workspace
 *.log
 *.tmp
+**/.project
+**/.config/
+
+### Dependencies ###
+**/node_modules/
+**/bower_components/
+**/jspm_packages/
+**/[Pp]ackages/
+
+### Environment/Config ###
+.env
+.env.local
+appsettings.Development.json
+appsettings.local.json
+local.settings.json  # Azure Functions
+*.secrets.config
+**/global.json      
+
+### System Files ###
+.DS_Store
+Thumbs.db
+
+### Test/Coverage ###
+**/coverage/
+*.coverage
+*.coverage.xml
+
+### Azure/Cloud ###
+**/azds.yaml
+*.azure/

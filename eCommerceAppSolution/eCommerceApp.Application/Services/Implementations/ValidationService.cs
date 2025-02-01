@@ -15,7 +15,7 @@ namespace eCommerceApp.Application.Services.Implementations
                 string errorToString = string.Join("; ", errors);
                 return new ServiceResponse { Message = errorToString };
             }
-            return new ServiceResponse { Succes = true };
+            return new ServiceResponse { Succes = true , Message="Succes"};
         }
     }
 }

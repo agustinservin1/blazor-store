@@ -6,8 +6,6 @@ using eCommerceApp.Application.Validations;
 using eCommerceApp.Domain.Entities.Identity;
 using eCommerceApp.Domain.Interfaces.Authentication;
 using FluentValidation;
-using System.Runtime.CompilerServices;
-
 
 namespace eCommerceApp.Application.Services.Implementations.Authentication
 {
@@ -25,19 +23,20 @@ namespace eCommerceApp.Application.Services.Implementations.Authentication
         public async Task<ServiceResponse> CreateUser(CreateUser user)
         {
             var _validationResult = await validationService.ValidateAsync(user, createUserValidator);
-            if (_validationResult.Succes) return _validationResult;
+            if (!_validationResult.Succes) return _validationResult;
+
             var mappedModel = mapper.Map<AppUser>(user);
             mappedModel.UserName = user.Email;
             mappedModel.PasswordHash = user.Password;
 
             var result = await userManagement.CreateUser(mappedModel);
             if (!result)
-            {
-                return new ServiceResponse { Message = "Email Adress might be already in use or unknown error ocurred" };
-            }
+                 return new ServiceResponse (false, "Email Adress might be already in use or unknown error ocurred" );
+            
             var _user = await userManagement.GetUserByEmail(user.Email);
             var users = await userManagement.GetAllUsers();
-            var assignedResult = (bool) await roleManagement.AddUserToRole(_user!, users!.Count() > 1 ? "User" : "Admin");
+            
+            bool assignedResult = (bool) await roleManagement.AddUserToRole(_user!, users!.Count() > 1 ? "User" : "Admin");
             if (!assignedResult)
             {
                 //remove user
@@ -48,11 +47,11 @@ namespace eCommerceApp.Application.Services.Implementations.Authentication
                     logger.LogError(
                         new Exception($"User with Email as {_user.Email} failed to be remove as a result of role assigning issue"),
                         "User could not be assigned Role");
-                    return new ServiceResponse { Message = "Error occurred in creating account" };
+                    return new ServiceResponse (false,"Error occurred in creating account");
                 }
 
             }
-            return new ServiceResponse { Succes = true, Message = "Account created!" };
+            return new ServiceResponse(true, "Account created!");
         }
 
         public async Task<LoginResponse> LoginUser(LoginUser user)
@@ -64,30 +63,43 @@ namespace eCommerceApp.Application.Services.Implementations.Authentication
             mappedModel.PasswordHash = user.Password;
             bool loginResult = await userManagement.LoginUser(mappedModel);
             if (!loginResult)
-                return new LoginResponse(Message: "Email not found or invalid credentials");
+                return new LoginResponse(false, "Email not found or invalid credentials");
+
             var _user = await userManagement.GetUserByEmail(user.Email);
             var claims = await userManagement.GetUserClaims(_user!.Email!);
+            
             string jwtToken = tokenManagement.GenerateToken(claims);
             string refreshToken = tokenManagement.GetRefreshToken();
+
             int saveTokenResult = await tokenManagement.AddRefreshToken(_user.Id, refreshToken);
-            return saveTokenResult <= 0 ? new LoginResponse(Message: "Internal error ocurred while authenticating") :
-                new LoginResponse(Succes: true, Token: jwtToken, RefreshToken: refreshToken);
-
+            return saveTokenResult <= 0
+                ? new LoginResponse(false, "Internal error occurred while authenticating")
+                : new LoginResponse(true, "Login OK", Token: jwtToken, RefreshToken: refreshToken);
         }
-
         public async Task<LoginResponse> ReviveToken(string refreshToken)
         {
-            bool validateTokenResult = await tokenManagement.ValidateRefreshToken(refreshToken);
-            if (!validateTokenResult)
-                return new LoginResponse(Message: "Invalid token");
+            if (!await tokenManagement.ValidateRefreshToken(refreshToken))
+            {
+                return new LoginResponse(Message: "Invalid or expired refresh token");
+            }
             string userId = await tokenManagement.GetUserIdByRefreshToken(refreshToken);
-            AppUser? user = await userManagement.GetUserByEmail(userId);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new LoginResponse(Message: "Invalid refresh token");
+            }
+            var user = await userManagement.GetUserById(userId);
+            if (user == null)
+                return new LoginResponse(Message: "User not found");
+
             var claims = await userManagement.GetUserClaims(user!.Email!);
             string newJwtToken = tokenManagement.GenerateToken(claims);
             string newRefreshToken = tokenManagement.GetRefreshToken();
-            await tokenManagement.UpdateRefreshToken(userId, newRefreshToken);
+            int updateResult = await tokenManagement.UpdateRefreshToken(userId, newRefreshToken);
+            if (updateResult <= 0)
+            {
+                return new LoginResponse(Message: "Error updating refresh token");
+            }
             return new LoginResponse(Succes: true, Token:newJwtToken, RefreshToken:newRefreshToken);        
-
         }
     }
 }

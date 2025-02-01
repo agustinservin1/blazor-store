@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerceApp.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using eCommerceApp.Infrastructure.Data;
 namespace eCommerceApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250201162022_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8148ff94-4adf-4ed7-bb18-60baefec2ebf",
+                            Id = "55a720fa-63b1-4f01-9ad1-9b1be74d759a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d1f8e531-2ee8-4163-a631-ce6fb2b61046",
+                            Id = "448da773-0371-4a73-846f-f7f053944db7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -268,7 +271,7 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("RefreshTokenHash")
+                    b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

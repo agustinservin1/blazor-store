@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceApp.Application.Models
 {
-    public class LoginResponse(
+    public record LoginResponse(
         bool Succes=false,
         string Message=null!,
         string Token=null!,
