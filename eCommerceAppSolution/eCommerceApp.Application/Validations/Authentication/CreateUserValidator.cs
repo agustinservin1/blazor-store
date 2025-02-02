@@ -2,7 +2,7 @@
 using FluentValidation;
 namespace eCommerceApp.Application.Validations.Authentication
 {
-    public partial class CreateUserValidator : AbstractValidator<CreateUser>
+    public class CreateUserValidator : AbstractValidator<CreateUser>
     {
         public CreateUserValidator()
         {
