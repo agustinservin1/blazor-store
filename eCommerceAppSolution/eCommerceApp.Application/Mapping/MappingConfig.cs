@@ -13,13 +13,14 @@ namespace eCommerceApp.Application.Mapping
     {
         public MappingConfig()
         {
-            CreateMap<CreateProduct, Product>();
-            CreateMap<Product, GetProduct>();
-            CreateMap<UpdateProduct, Product>();
-
-
             CreateMap<CreateCategory, Category>();
+            CreateMap<CreateProduct, Product>();
+            
             CreateMap<Category, GetCategory>();
+            CreateMap<Product, GetProduct>();
+
+
+            CreateMap<UpdateProduct, Product>();
             CreateMap<UpdateCategory, Category>();
 
             CreateMap<CreateUser, AppUser>();
@@ -29,8 +30,9 @@ namespace eCommerceApp.Application.Mapping
             CreateMap<AppUser, LoginUser>();
 
             CreateMap<PaymentMethod, GetPaymentMethod>();
-            
-            CreateMap<CreateAchieve, Achieve>();    
+
+            CreateMap<CreateAchieve, Achieve>();
+            CreateMap<Achieve, CreateAchieve>();
 
 
 

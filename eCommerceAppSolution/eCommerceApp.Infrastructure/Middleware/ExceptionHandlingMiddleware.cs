@@ -27,7 +27,7 @@ namespace eCommerceApp.Infrastructure.Middleware
                     switch (innerException.Number) {
                         case 2627: //Unique constraint 
                             context.Response.StatusCode = StatusCodes.Status409Conflict;
-                            await context.Response.WriteAsJsonAsync("Unique constraint");
+                            await context.Response.WriteAsync("Unique constraint");
                             break;
                         case 515: //Cannot insert null
                             context.Response.StatusCode = StatusCodes.Status400BadRequest;
@@ -35,11 +35,11 @@ namespace eCommerceApp.Infrastructure.Middleware
                             break;
                         case 547: //foreing key constraint 
                             context.Response.StatusCode = StatusCodes.Status409Conflict;
-                            await context.Response.WriteAsJsonAsync("Foreing key constraint");
+                            await context.Response.WriteAsync("Foreing key constraint");
                             break;
                         default:
                             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                            await context.Response.WriteAsJsonAsync("An error ocurred while processing your request");
+                            await context.Response.WriteAsync("An error ocurred while processing your request");
                             break;
                     }
                 }

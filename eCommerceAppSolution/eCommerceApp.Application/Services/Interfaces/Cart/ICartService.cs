@@ -1,5 +1,6 @@
 ﻿using eCommerceApp.Application.Models;
 using eCommerceApp.Application.Models.CartDto;
+using eCommerceApp.Domain.Entities.Cart;
 
 namespace eCommerceApp.Application.Services.Interfaces.Cart
 {
@@ -7,6 +8,5 @@ namespace eCommerceApp.Application.Services.Interfaces.Cart
     {
         Task<ServiceResponse> Checkout(Checkout checkout);
         Task<ServiceResponse> SaveCheckoutHistory(IEnumerable<CreateAchieve> achieves);
-
     }
 }

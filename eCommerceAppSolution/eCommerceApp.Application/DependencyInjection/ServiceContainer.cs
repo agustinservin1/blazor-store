@@ -1,7 +1,9 @@
 ﻿using eCommerceApp.Application.Mapping;
 using eCommerceApp.Application.Services.Implementations;
 using eCommerceApp.Application.Services.Implementations.Authentication;
+using eCommerceApp.Application.Services.Implementations.Cart;
 using eCommerceApp.Application.Services.Interfaces;
+using eCommerceApp.Application.Services.Interfaces.Cart;
 using eCommerceApp.Application.Validations;
 using eCommerceApp.Application.Validations.Authentication;
 using eCommerceApp.Domain.Interfaces.Authentication;
@@ -28,6 +30,7 @@ namespace eCommerceApp.Application.DependencyInjection
             services.AddValidatorsFromAssemblyContaining<CreateUserValidator>();
             services.AddScoped<IValidationService, ValidationService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<ICartService, CartService>();
 
             return services;
 

@@ -1,6 +1,6 @@
-﻿using eCommerceApp.Application.Services.Interfaces.Cart;
+﻿using eCommerceApp.Application.Services.Implementations.Cart;
+using eCommerceApp.Application.Services.Interfaces.Cart;
 using eCommerceApp.Application.Services.Interfaces.Logging;
-using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Entities.Identity;
 using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Domain.Interfaces.Authentication;
@@ -19,7 +19,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace eCommerceApp.Infrastructure.DependencyInjection
@@ -29,14 +28,17 @@ namespace eCommerceApp.Infrastructure.DependencyInjection
         public static IServiceCollection AddInfrastructureServices
             (this IServiceCollection services, IConfiguration config)
         {
+            string stripeSecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY")
+                        ?? config["Stripe:SecretKey"]
+                        ?? throw new InvalidOperationException("Stripe Secret Key is not configured");
+           
             string connectionString = "Default";
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(config.GetConnectionString(connectionString),
             sqlOptions =>
             {
-                //Ensure this is the correct assembly
                 sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
-                sqlOptions.EnableRetryOnFailure();//Enable automatic retries for transient failures
+                sqlOptions.EnableRetryOnFailure();
             })
             .UseExceptionProcessor(),
             ServiceLifetime.Scoped);
@@ -86,7 +88,13 @@ namespace eCommerceApp.Infrastructure.DependencyInjection
             services.AddScoped<ITokenManagement, TokenManagement>();
             services.AddScoped<IRoleManagement, RoleManagement>();
             services.AddScoped<IPaymentMethod, PaymentMethodRepository>();
+            services.AddScoped<ICart, CartRepository>();
+            services.AddScoped<IPaymentMethodsService, PaymentMethodService>();
             services.AddScoped<IPaymentService, StripePaymentService>();
+
+
+
+            Stripe.StripeConfiguration.ApiKey = stripeSecretKey;
             return services;
         }
         public static IApplicationBuilder UseInfrastructureService(this IApplicationBuilder app)

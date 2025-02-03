@@ -1,4 +1,5 @@
-﻿  using eCommerceApp.Domain.Interfaces;
+﻿using eCommerceApp.Application.Exceptions;
+using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,9 @@ namespace eCommerceApp.Infrastructure.Repositories
 
         public async Task<int> DeleteAsync(Guid id)
         {
-            var result = await context.Set<TEntity>().FindAsync(id);
-            if (result == null) return 0;
-            context.Set<TEntity>().Remove(result);
+            var entity = await context.Set<TEntity>().FindAsync(id)??
+                  throw new ItemNotFoundException($"Item with {id} not found");
+            context.Set<TEntity>().Remove(entity);
             return await context.SaveChangesAsync();
         }
         
@@ -30,7 +31,7 @@ namespace eCommerceApp.Infrastructure.Repositories
         public async Task<TEntity?> GetByIdAsync(Guid id)
         {
             var result = await context.Set<TEntity>().FindAsync(id);
-            return result;
+            return result!;
 
         }
         public async Task<int> UpdateAsync(TEntity entity)

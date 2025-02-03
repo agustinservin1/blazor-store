@@ -9,6 +9,5 @@ namespace eCommerceApp.Application.Models.CartDto
         public int Quantity { get; set; }
         [Required]
         public Guid UserId { get; set; }
-
     }
 }

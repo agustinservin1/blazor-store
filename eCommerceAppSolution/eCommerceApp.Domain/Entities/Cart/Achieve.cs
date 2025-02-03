@@ -9,6 +9,6 @@ namespace eCommerceApp.Domain.Entities.Cart
         public Guid ProductId { get; set; } 
         public int Quantity { get; set; }
         public Guid UserId { get; set; }
-        public DateTime CreateData { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }

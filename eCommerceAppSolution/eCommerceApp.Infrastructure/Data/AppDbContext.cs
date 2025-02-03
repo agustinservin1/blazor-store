@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using eCommerceApp.Domain.Entities.Cart;
+using System.Reflection.Emit;
 
 namespace eCommerceApp.Infrastructure.Data
 {
@@ -22,35 +23,37 @@ namespace eCommerceApp.Infrastructure.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityRole>()
-            .HasData(
-                new IdentityRole
+            builder.Entity<PaymentMethod>()
+             .HasData(
+                new PaymentMethod
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Admin",
-                    NormalizedName = "ADMIN"
-                },
-                new IdentityRole
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "User",
-                    NormalizedName = "USER"
+                    Id = Guid.NewGuid(),
+                    Name = "Credit Card",
                 });
 
-            builder.Entity<PaymentMethod>()
-           .HasData(
-               new IdentityRole
-               {
-                   Id = Guid.NewGuid().ToString(),
-                   Name = "Credit Card",
-                   NormalizedName = "ADMIN"
-               },
+
+            builder.Entity<IdentityRole>()
+             .HasData(
+                 new IdentityRole
+                 {
+                     Id = Guid.NewGuid().ToString(),
+                     Name = "Admin",
+                     NormalizedName = "ADMIN"
+                 },
+                 new IdentityRole
+                 {
+                     Id = Guid.NewGuid().ToString(),
+                     Name = "User",
+                     NormalizedName = "USER"
+                 });
 
             builder.Entity<RefreshToken>()
-               .HasOne(rt => rt.User)
-               .WithMany()
-               .HasForeignKey(rt => rt.UserId)
-               .OnDelete(DeleteBehavior.Cascade));
+              .HasOne(rt => rt.User)
+              .WithMany()
+              .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            
         }
     }
 }

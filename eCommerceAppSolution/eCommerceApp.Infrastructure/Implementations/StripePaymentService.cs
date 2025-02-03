@@ -40,7 +40,7 @@ namespace eCommerceApp.Infrastructure.Implementations
                 }
                 var options = new SessionCreateOptions
                 {
-                    PaymentMethodTypes = ["usd"],
+                    PaymentMethodTypes = ["card"],
                     LineItems = lineItems,
                     Mode = "payment",
                     SuccessUrl = "https:localhost:7267/payment-success",

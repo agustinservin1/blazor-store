@@ -6,7 +6,7 @@ namespace eCommerceApp.Application.Models.ProductDTO
     {
         [Required]
         public Guid Id { get; set; }
-        public GetCategory Category { get; set; } = new();
+        public GetCategory? Category { get; set; } = new();
     }
    
 }

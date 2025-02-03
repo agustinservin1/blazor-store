@@ -15,9 +15,7 @@ namespace eCommerceApp.Application.Services.Implementations
             int result = await productInterface.AddAsync(mappedData);
             return result > 0 ? new ServiceResponse(true, "Product Added") :
                    new ServiceResponse(false, "Product failed to be Added");
-        }
-        
-
+        }     
         public async Task<ServiceResponse> DeleteAsync(Guid id)
         {
             var result = await productInterface.DeleteAsync(id);

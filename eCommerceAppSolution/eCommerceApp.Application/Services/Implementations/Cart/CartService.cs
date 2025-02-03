@@ -5,9 +5,11 @@ using eCommerceApp.Application.Services.Interfaces.Cart;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Entities.Cart;
 using eCommerceApp.Domain.Interfaces;
+using eCommerceApp.Domain.Interfaces.Cart;
+using ProcessCart = eCommerceApp.Application.Models.CartDto.ProcessCart;
 namespace eCommerceApp.Application.Services.Implementations.Cart
 {
-    public class CartService(ICartService cart,
+    public class CartService(ICart cartInterface,
         IMapper mapper,
         IGeneric<Product> productInterface,
         IPaymentMethodsService paymentMethodService,
@@ -27,9 +29,9 @@ namespace eCommerceApp.Application.Services.Implementations.Cart
         public async Task<ServiceResponse> SaveCheckoutHistory(IEnumerable<CreateAchieve> achieves)
         {
             var mappedData = mapper.Map<IEnumerable<Achieve>>(achieves);
-            var result = await cart.SaveCheckoutHistory(mappedData);
-            return result > 0 ? new ServiceResponse(true, "Checkout achieved") : 
-                new ServiceResponse(false, "Error ocurred in saving")
+            var result = await cartInterface.SaveCheckoutHistory(mappedData);
+            return result > 0 ? new ServiceResponse(true, "Checkout achieved") :
+                new ServiceResponse(false, "Error ocurred in saving");
         }
         private async Task<(IEnumerable<Product>, decimal)> GetCartTotalAmount(IEnumerable<ProcessCart> carts)
         {
@@ -44,9 +46,9 @@ namespace eCommerceApp.Application.Services.Implementations.Cart
                 .ToList();
 
             var totalAmount = carts
-                .Where(cartItem => cartProducts.Any(p => p.Id == cartItem.ProductId)
-                .Sum(cartItem => cartItem.Quantity * cartProducts.First(p => p.Id == cartItem.ProductId)!.Price));
-            return(cartProducts, totalAmount);
+                .Where(cartItem => cartProducts.Any(p => p.Id == cartItem.ProductId))
+                .Sum(cartItem => cartItem.Quantity * cartProducts.First(p => p.Id == cartItem.ProductId)!.Price);
+            return(cartProducts!, totalAmount);
 
 
         }

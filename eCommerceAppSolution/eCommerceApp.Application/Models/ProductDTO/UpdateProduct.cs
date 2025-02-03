@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace eCommerceApp.Application.Models.ProductDTO
 {
-    public class UpdateProduct : CategoryBase
+    public class UpdateProduct : ProductBase
     {
         [Required]
         public Guid Id { get; set; }
