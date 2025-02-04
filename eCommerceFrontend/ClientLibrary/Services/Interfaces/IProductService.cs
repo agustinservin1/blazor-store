@@ -1,7 +1,7 @@
 ﻿using ClientLibrary.Models.Category;
 using ClientLibrary.Models.Products;
 
-namespace ClientLibrary.Services
+namespace ClientLibrary.Services.Interfaces
 {
     public interface IProductService
     {

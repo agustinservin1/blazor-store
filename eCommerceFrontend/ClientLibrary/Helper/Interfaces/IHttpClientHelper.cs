@@ -1,6 +1,6 @@
-﻿namespace ClientLibrary.Helper
+﻿namespace ClientLibrary.Helper.Interfaces
 {
-    public interface IHttpClientHelper 
+    public interface IHttpClientHelper
     {
         Task<HttpClient> GetPrivateClientAsync();
         HttpClient GetPublicClient();

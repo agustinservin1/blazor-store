@@ -1,6 +1,7 @@
-﻿using System.Net.Http.Headers;
+﻿using ClientLibrary.Helper.Interfaces;
+using System.Net.Http.Headers;
 
-namespace ClientLibrary.Helper
+namespace ClientLibrary.Helper.Implementations
 {
     public class HttpClientHelper(IHttpClientFactory clientFactory, ITokenService tokenService) : IHttpClientHelper
     {
@@ -10,7 +11,7 @@ namespace ClientLibrary.Helper
             string token = await tokenService.GetJwtTokenAsync(Constant.Cookie.Name);
             if (string.IsNullOrEmpty(token)) return client;
             var newClient = new HttpClient();
-            newClient.DefaultRequestHeaders.Authorization = 
+            newClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue(Constant.Authentication.Type);
             return newClient;
         }
@@ -18,7 +19,7 @@ namespace ClientLibrary.Helper
         public HttpClient GetPublicClient()
         {
             return clientFactory.CreateClient(Constant.ApiClient.Name);
-            
+
         }
     }
 }

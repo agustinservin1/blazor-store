@@ -21,7 +21,7 @@ namespace eCommerceApp.Web.Controllers
             return data != null ? Ok(data) : NotFound(data);
         }
         [HttpPost]
-        public async Task<IActionResult> Add(CreateProduct product)
+        public async Task<IActionResult> Add([FromBody] CreateProduct product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -29,7 +29,7 @@ namespace eCommerceApp.Web.Controllers
             return result.Succes ? Ok(result) : BadRequest(result);
         }
         [HttpPut("update")]
-        public async Task<IActionResult> Update (UpdateProduct product)
+        public async Task<IActionResult> Update ([FromBody] UpdateProduct product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

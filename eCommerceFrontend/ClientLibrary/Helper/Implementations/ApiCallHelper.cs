@@ -1,6 +1,7 @@
-﻿using System.Net.Http.Json;
+﻿using ClientLibrary.Helper.Interfaces;
+using System.Net.Http.Json;
 
-namespace ClientLibrary.Helper
+namespace ClientLibrary.Helper.Implementations
 {
     public class ApiCallHelper : IApiCallHelper
     {
@@ -20,7 +21,7 @@ namespace ClientLibrary.Helper
                         string idRoute = apiCall.Id != null ? $"/{apiCall.Id}" : null!;
                         return await apiCall.Client!.GetAsync($"{apiCall.Route}/{idRoute}");
                     default:
-                        throw new Exception("API call type not specified)"
+                        throw new Exception("API call type not specified");
                 }
             }
             catch { return null!; }

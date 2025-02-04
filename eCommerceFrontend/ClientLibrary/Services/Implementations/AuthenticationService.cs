@@ -1,7 +1,9 @@
 ﻿using ClientLibrary.Helper;
+using ClientLibrary.Helper.Interfaces;
 using ClientLibrary.Models;
 using ClientLibrary.Models.Authentication;
-namespace ClientLibrary.Services
+using ClientLibrary.Services.Interfaces;
+namespace ClientLibrary.Services.Implementations
 {
     public class AuthenticationService(IApiCallHelper apiHelper, IHttpClientHelper httpClient) : IAuthenticationService
     {

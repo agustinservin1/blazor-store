@@ -12,13 +12,13 @@ namespace eCommerceApp.Web.Controllers
     public class AuthenticationController (IAuthenticationService authenticationService) : ControllerBase
     {
         [HttpPost("register")]
-        public async Task<IActionResult> CreateUser(CreateUser user)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUser user)
         {
             var result = await authenticationService.CreateUser(user);
             return result.Succes ? Ok(result) : BadRequest(result);
         }
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUser (LoginUser loginUser)
+        public async Task<IActionResult> LoginUser ([FromBody] LoginUser loginUser)
         {
             var result = await authenticationService.LoginUser(loginUser);
             return result.Succes ? Ok(result) : BadRequest(result);

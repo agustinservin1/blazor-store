@@ -1,12 +1,13 @@
-﻿using NetcodeHub.Packages.WebAssembly.Storage.Cookie;
+﻿using ClientLibrary.Helper.Interfaces;
+using NetcodeHub.Packages.WebAssembly.Storage.Cookie;
 using System.ComponentModel.Design;
-namespace ClientLibrary.Helper
+namespace ClientLibrary.Helper.Implementations
 {
     public class TokenService(IBrowserCookieStorageService cookieService) : ITokenService
     {
         public async Task<string> GetRefreshTokenAsync(string key)
         {
-            return await GetTokenAsync(key,1);
+            return await GetTokenAsync(key, 1);
         }
 
         public async Task<string> GetJwtTokenAsync(string key)
@@ -19,8 +20,9 @@ namespace ClientLibrary.Helper
             try
             {
                 string token = await cookieService.GetAsync(key);
-                return token != null ? token.Split("--")[position] : null!; 
-            } catch
+                return token != null ? token.Split("--")[position] : null!;
+            }
+            catch
             {
                 return null!;
             }

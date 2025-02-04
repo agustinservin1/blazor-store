@@ -1,4 +1,4 @@
-﻿namespace ClientLibrary.Helper
+﻿namespace ClientLibrary.Helper.Interfaces
 {
     public interface IApiCallHelper
     {
