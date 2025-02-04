@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClientLibrary
+﻿namespace ClientLibrary.Helper
 {
-    internal interface IApiCallHelper
+    public interface IApiCallHelper
     {
+        Task<HttpResponseMessage> ApiCallTypeCall<TModel>(ApiCall apiCall);
+        Task<TResponse> GetServiceResponse<TResponse>(HttpResponseMessage message);
+        ServiceResponse ConnectionError();
+
     }
 }

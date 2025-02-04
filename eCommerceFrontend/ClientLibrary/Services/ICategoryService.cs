@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClientLibrary.Models.Category;
+using ClientLibrary.Models.Products;
 
 namespace ClientLibrary.Services
 {
-    internal interface ICategoryService
+    public interface ICategoryService
     {
+        Task<IEnumerable<GetCategory>> GetAllAsync();
+        Task<GetCategory> GetByIdAsync(Guid id);
+        Task<ServiceResponse> AddAsync(CreateCategory createCategory);
+        Task<ServiceResponse> DeleteAsync(Guid id);
+        Task<ServiceResponse> UpdateAsync(UpdateCategory updateCategory);
+        Task<IEnumerable<GetProduct>> GetProductsByCategory(Guid categoryId);
     }
 }

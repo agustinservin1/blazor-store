@@ -2,8 +2,8 @@
 {
     public interface IHttpClientHelper 
     {
-        HttpClient GetHttpClient();
         Task<HttpClient> GetPrivateClientAsync();
+        HttpClient GetPublicClient();
 
     }
 }

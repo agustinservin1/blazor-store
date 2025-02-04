@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClientLibrary.Models
 {
-    internal class Dummy
+    public class Dummy
     {
     }
 }

@@ -29,7 +29,7 @@
         public static class ApiCallType
         {
             public const string Get = "get";
-            public const string Add = "post";
+            public const string Post = "post";
             public const string Update = "delete";
             public const string Delete = "update";
         }
