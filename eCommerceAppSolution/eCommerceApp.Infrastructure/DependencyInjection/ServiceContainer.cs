@@ -5,12 +5,14 @@ using eCommerceApp.Domain.Entities.Identity;
 using eCommerceApp.Domain.Interfaces;
 using eCommerceApp.Domain.Interfaces.Authentication;
 using eCommerceApp.Domain.Interfaces.Cart;
+using eCommerceApp.Domain.Interfaces.CategorySpecifics;
 using eCommerceApp.Infrastructure.Data;
 using eCommerceApp.Infrastructure.Implementations;
 using eCommerceApp.Infrastructure.Middleware;
 using eCommerceApp.Infrastructure.Repositories;
 using eCommerceApp.Infrastructure.Repositories.Authentication;
 using eCommerceApp.Infrastructure.Repositories.Cart;
+using eCommerceApp.Infrastructure.Repositories.Category;
 using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -89,6 +91,7 @@ namespace eCommerceApp.Infrastructure.DependencyInjection
             services.AddScoped<IRoleManagement, RoleManagement>();
             services.AddScoped<IPaymentMethod, PaymentMethodRepository>();
             services.AddScoped<ICart, CartRepository>();
+            services.AddScoped<ICategory, CategoryRepository>();
             services.AddScoped<IPaymentMethodsService, PaymentMethodService>();
             services.AddScoped<IPaymentService, StripePaymentService>();
 

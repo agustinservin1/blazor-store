@@ -11,6 +11,7 @@ namespace eCommerceApp.Application.Services.Interfaces
         Task<ServiceResponse> AddAsync(CreateCategory createCategory);
         Task<ServiceResponse> DeleteAsync(Guid id);
         Task<ServiceResponse> UpdateAsync(UpdateCategory updateCategory);
+        Task<IEnumerable<GetProduct>>GetProductsByCategory(Guid categoryId);
     }
 }
 

@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace eCommerceApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class FixMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -244,17 +243,17 @@ namespace eCommerceApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                columns: ["Id", "ConcurrencyStamp", "Name", "NormalizedName"],
                 values: new object[,]
                 {
-                    { "1acb07ff-c2b1-4071-bb95-dfbe311d13ac", null, "Admin", "ADMIN" },
-                    { "a275f43c-8fd9-4fbf-9e1d-a371b0d0bb8a", null, "User", "USER" }
+                    { "136af9f1-e02f-406c-aa95-36062c989b30", null, "Admin", "ADMIN" },
+                    { "80aa1fac-f0b5-4594-95df-035c33de89d6", null, "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "PaymentMethods",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("a64be953-ef11-42e3-aff6-f1902ae7a8f6"), "Credit Card" });
+                columns: ["Id", "Name"],
+                values: [new Guid("4bbf0e94-755b-4f25-a5b8-496b49119097"), "Credit Card"]);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

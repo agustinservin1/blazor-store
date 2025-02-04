@@ -14,7 +14,7 @@ namespace eCommerceApp.Domain.Entities
         public string? Image { get; set; }
         public int Quantity { get; set; }
 
-        public Category? category { get; set; }
+        public Category? Category { get; set; }
         public Guid  CategoryId { get; set; }
 
 

@@ -51,13 +51,13 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1acb07ff-c2b1-4071-bb95-dfbe311d13ac",
+                            Id = "136af9f1-e02f-406c-aa95-36062c989b30",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a275f43c-8fd9-4fbf-9e1d-a371b0d0bb8a",
+                            Id = "80aa1fac-f0b5-4594-95df-035c33de89d6",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -213,7 +213,7 @@ namespace eCommerceApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a64be953-ef11-42e3-aff6-f1902ae7a8f6"),
+                            Id = new Guid("4bbf0e94-755b-4f25-a5b8-496b49119097"),
                             Name = "Credit Card"
                         });
                 });
@@ -423,13 +423,13 @@ namespace eCommerceApp.Infrastructure.Migrations
 
             modelBuilder.Entity("eCommerceApp.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("eCommerceApp.Domain.Entities.Category", "category")
+                    b.HasOne("eCommerceApp.Domain.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("category");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("eCommerceApp.Domain.Entities.Category", b =>

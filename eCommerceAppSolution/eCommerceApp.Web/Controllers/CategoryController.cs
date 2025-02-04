@@ -14,13 +14,13 @@ namespace eCommerceApp.Web.Controllers
             var data = await categoryService.GetAllAsync();
             return data.Any() ? Ok(data) : NotFound(data);
         }
-        [HttpGet("byId/{id}")]
+        [HttpGet("single/{id}")]
         public async Task<IActionResult> GetSingle(Guid id)
         {
             var data = await categoryService.GetByIdAsync(id);
             return data != null ? Ok(data) : NotFound(data);
         }
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add(CreateCategory category)
         {
             if (!ModelState.IsValid) 
@@ -36,8 +36,14 @@ namespace eCommerceApp.Web.Controllers
             var result = await categoryService.UpdateAsync(category);
             return result.Succes ? Ok(result) : BadRequest(result);
         }
-        [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpPut("products-by-category/{categoryId}")]
+        public async Task<IActionResult> GetProductByCategory(Guid categoryId)
+        {
+            var result= await categoryService.GetProductsByCategory(categoryId);
+            return result.Any() ? Ok(result) : NotFound();
+        }
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(Guid id) 
         {
             var result = await categoryService.DeleteAsync(id);
             return result.Succes ? Ok(result) : BadRequest(result);
