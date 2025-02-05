@@ -3,6 +3,7 @@ using ClientLibrary.Helper.Interfaces;
 using ClientLibrary.Models;
 using ClientLibrary.Models.Authentication;
 using ClientLibrary.Services.Interfaces;
+using System.Web;
 namespace ClientLibrary.Services.Implementations
 {
     public class AuthenticationService(IApiCallHelper apiHelper, IHttpClientHelper httpClient) : IAuthenticationService
@@ -23,7 +24,7 @@ namespace ClientLibrary.Services.Implementations
                 await apiHelper.GetServiceResponse<ServiceResponse>(result);
         }
 
-        public async Task<LoginResponse> LoginUser(CreateUser user)
+        public async Task<LoginResponse> LoginUser(LoginUser user)
         {
             var client = await httpClient.GetPrivateClientAsync();
             var apiCall = new ApiCall
@@ -34,7 +35,7 @@ namespace ClientLibrary.Services.Implementations
                 Id = null!,
                 Model = user,
             };
-            var result = await apiHelper.ApiCallTypeCall<CreateUser>(apiCall);
+            var result = await apiHelper.ApiCallTypeCall<LoginUser>(apiCall);
             return result == null ? new LoginResponse(Message: apiHelper.ConnectionError().Message) :
                 await apiHelper.GetServiceResponse<LoginResponse>(result);
         }

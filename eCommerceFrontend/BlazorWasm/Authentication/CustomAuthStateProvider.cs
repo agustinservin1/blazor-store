@@ -17,7 +17,7 @@ namespace BlazorWasm.Authentication
                 return await Task.FromResult(new AuthenticationState(_anonymous));
 
             var claims = GetClaims(jwt);
-            if (!claims.Any())
+            if (claims.Count == 0)
                 return await Task.FromResult(new AuthenticationState(_anonymous));
 
             var claimPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
@@ -27,7 +27,7 @@ namespace BlazorWasm.Authentication
         {
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        private static IEnumerable<Claim> GetClaims(string jwt)
+        private static List<Claim> GetClaims(string jwt)
         {
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwt);
