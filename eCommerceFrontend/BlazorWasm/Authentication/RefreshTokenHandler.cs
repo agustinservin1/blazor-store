@@ -10,7 +10,8 @@ namespace BlazorWasm.Authentication
         IAuthenticationService authenticationService,   
         IHttpClientHelper httpClient) : DelegatingHandler
     {
-        protected override async Task<HttpResponseMessage>SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage>
+            SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             bool isPost = request.Method.Equals("POST");
             bool isPut = request.Method.Equals("PUT");

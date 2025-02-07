@@ -56,3 +56,12 @@ Thumbs.db
 ### Azure/Cloud ###
 **/azds.yaml
 *.azure/
+
+### Blazor eCommerceFrontend ###
+eCommerceFrontend/BlazorWasm/wwwroot/css/
+eCommerceFrontend/BlazorWasm/wwwroot/favicon.png
+eCommerceFrontend/BlazorWasm/wwwroot/font-awesome/
+eCommerceFrontend/BlazorWasm/wwwroot/images/
+eCommerceFrontend/BlazorWasm/wwwroot/js/
+eCommerceFrontend/package-lock.json
+eCommerceFrontend/package.json

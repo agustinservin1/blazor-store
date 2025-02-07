@@ -46,15 +46,16 @@ namespace ClientLibrary.Services.Implementations
             var client = httpClient.GetPublicClient();
             var apiCall = new ApiCall
             {
-                Route = Category.Get,
+                Route = Category.GetAll,
                 Type = ApiCallType.Get,
                 Client = client,
                 Id = null!,
                 Model = null!
             };
             var result = await apiHelper.ApiCallTypeCall<Dummy>(apiCall);
-            return result == null ? [] :
-                 await apiHelper.GetServiceResponse<IEnumerable<GetCategory>>(result);
+            return result.IsSuccessStatusCode
+                    ? await apiHelper.GetServiceResponse<IEnumerable<GetCategory>>(result)
+                    : [];
         }
         //public
 
@@ -70,8 +71,9 @@ namespace ClientLibrary.Services.Implementations
             };
             apiCall.ToString(id);
             var result = await apiHelper.ApiCallTypeCall<Dummy>(apiCall);
-            return result == null ? null! :
-                 await apiHelper.GetServiceResponse<GetCategory>(result);
+            return result.IsSuccessStatusCode
+                    ? await apiHelper.GetServiceResponse<GetCategory>(result)
+                    : null!;
         }
 
 
@@ -97,15 +99,17 @@ namespace ClientLibrary.Services.Implementations
             var client = httpClient.GetPublicClient();
             var apiCall = new ApiCall
             {
-                Route = Category.Get,
+                Route = Category.GetProductsByCategory,
                 Type = ApiCallType.Get,
                 Client = client,
                 Model = null!
             };
             apiCall.ToString(categoryId);
             var result = await apiHelper.ApiCallTypeCall<Dummy>(apiCall);
-            return result == null ? [] :
-                 await apiHelper.GetServiceResponse<IEnumerable<GetProduct>>(result);
+            return result.IsSuccessStatusCode
+                    ? await apiHelper.GetServiceResponse<IEnumerable<GetProduct>>(result)
+                    : [];
+
         }
     }
 }

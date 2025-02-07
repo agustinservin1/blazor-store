@@ -12,16 +12,24 @@ namespace BlazorWasm.Authentication
         private ClaimsPrincipal _anonymous = new(new ClaimsIdentity());
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            string jwt = await tokenService.GetJwtTokenAsync(Constant.Cookie.Name);
-            if (string.IsNullOrEmpty(jwt))
-                return await Task.FromResult(new AuthenticationState(_anonymous));
+            try
+            {
 
-            var claims = GetClaims(jwt);
-            if (claims.Count == 0)
-                return await Task.FromResult(new AuthenticationState(_anonymous));
+                 string jwt = await tokenService.GetJwtTokenAsync(Constant.Cookie.Name);
+                if (string.IsNullOrEmpty(jwt))
+                    return await Task.FromResult(new AuthenticationState(_anonymous));
 
-            var claimPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims));
-            return await Task.FromResult(new AuthenticationState(claimPrincipal));
+                var claims = GetClaims(jwt);
+                if (!claims.Any())
+                    return await Task.FromResult(new AuthenticationState(_anonymous));
+
+                var claimPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwtAuth"));
+                return await Task.FromResult(new AuthenticationState(claimPrincipal));
+            }
+            catch
+            {
+                return await Task.FromResult(new AuthenticationState(_anonymous));
+            }
         }
         public void NotifyAuthenticationState()
         {
@@ -29,12 +37,29 @@ namespace BlazorWasm.Authentication
         }
         private static List<Claim> GetClaims(string jwt)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var token = handler.ReadJwtToken(jwt);
-            return token.Claims.ToList();
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                
+                Console.WriteLine($"JWT: {jwt}");
+                var tokenParts = jwt.Split("--");
+                var tokenOnly = tokenParts[0].Trim();
 
+                var token = handler.ReadJwtToken(tokenOnly);
+                var claims = token.Claims.ToList();
 
+                foreach (var claim in claims)
+                {
+                    Console.WriteLine($"Claim: {claim.Type} = {claim.Value}");
+                }
 
+                return claims;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return new List<Claim>();
+            }
         }
     }
 }

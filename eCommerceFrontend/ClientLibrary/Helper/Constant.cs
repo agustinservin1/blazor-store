@@ -17,6 +17,7 @@
             public const string Add = "category/add";
             public const string Update = "category/update";
             public const string Delete = "category/delete";
+            public const string GetProductsByCategory = "category/products-by-category";
         }
         public static class Authentication
         {

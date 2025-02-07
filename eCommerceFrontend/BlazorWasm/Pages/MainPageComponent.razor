@@ -1,0 +1,56 @@
+﻿@page "/main/products/category/{CategoryId}"
+
+@if (SelectedCategory != null && ProductsByCategory.Any())
+{
+    <div class="container-fluid mt-5 p-3">
+        <h1 class="fashion_taital text-light fw-bold">@SelectedCategory!.Name Products</h1>
+        <div class="fashion_section_2">
+            <div class="row">
+                @foreach (var product in ProductsByCategory)
+                {
+                    <div class="col-lg-3 col-sm-12">
+                        <div class="box_main">
+                            <h4 class="shirt_text">@product.Name</h4>
+                            @if (product.IsNew)
+                            {
+                                <span id="newTag" class="badge badge-pill badge-success fs-2">New</span>
+                            }
+                            <p class="price_text">Price <span style="color: #262626;">$ @product.Price</span></p>
+                            <div class="tshirt_img"><img src="@product.Base64Image"></div>
+                            <div class="btn_main">
+                                <div class="buy_bt"><a href="#"><i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    Add To Cart</a></div>
+                                <div class="seemore_bt"><a href="#">See More</a></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else{
+    <div class="container-fluid m-5">
+        <div class="row p-5">
+            <div class="col-lg-2 offset-4">
+                <div class="alert alert-info">No Products Found</div>    
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter] public string CategoryId { get; set; } = string.Empty;
+    public GetCategory SelectedCategory { get; set; } = new();
+    IEnumerable<GetProduct> ProductsByCategory { get; set; } = [];
+
+    protected async override Task OnParametersSetAsync()
+    {
+        if (string.IsNullOrEmpty(CategoryId))
+            NavManager.NavigateTo("/");
+
+        SelectedCategory = await categoryService.GetByIdAsync(Guid.Parse(CategoryId));
+        ProductsByCategory = await categoryService.GetProductsByCategory(Guid.Parse(CategoryId));
+    }
+}
